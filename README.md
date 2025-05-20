@@ -20,6 +20,7 @@ volleyball-team-generator/
 │   ├── app.py
 │   ├── generator.py
 │   ├── utils.py
+│   ├── player.py
 │   └── config.py
 ├── tests/
 │   └── test_generator.py
