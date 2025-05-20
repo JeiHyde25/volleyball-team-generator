@@ -1,0 +1,51 @@
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Streamlit cache
+.streamlit/
+.cache/
+
+# Docker artifacts
+*.pid
+*.tar
+*.img
+*.container
+*.log
+.dockerignore
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Test/output artifacts
+.coverage
+htmlcov/
+coverage.xml
+.pytest_cache/
+test-results.xml
+
+# Prompt or secret configs
+.env
+.env.*
