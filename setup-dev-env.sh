@@ -14,14 +14,18 @@ fi
 
 # Compile requirements.in
 echo "📦 Compiling requirements.in → requirements.txt..."
-pip-compile requirements.in
+pip-compile --upgrade requirements.in
 
 # Compile requirements-dev.in
 echo "📦 Compiling requirements-dev.in → requirements-dev.txt..."
-pip-compile requirements-dev.in
+pip-compile --upgrade requirements-dev.in
 
 # Install dev requirements
 echo "📥 Installing development dependencies..."
 pip install -r requirements-dev.txt
+
+# Install runtime requirements
+echo "📥 Installing development dependencies..."
+pip install -r requirements.txt
 
 echo "✅ Development environment setup complete."

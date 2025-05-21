@@ -8,7 +8,7 @@ class Player:
     skill_level: str
 
 
-def create_player(name: str = "", position: str = "", skill_level: str = ""):
+def create_player(name: str = "", position: str = "", skill_level: str = "") -> Player:
     validate_player_fields(name, position, skill_level)
     return Player(
         name=name.strip(), position=position.strip(), skill_level=skill_level.strip()

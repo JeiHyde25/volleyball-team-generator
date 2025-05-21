@@ -1,5 +1,6 @@
-from src.player import Player, create_player
 import pytest
+
+from src.player import Player, create_player
 
 VALID_POSITIONS = ["Setter", "Outside Hitter", "Middle Blocker", "Opposite"]
 
