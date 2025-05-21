@@ -1,4 +1,3 @@
-
 # 🏐 Volleyball Team Generator
 
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
@@ -28,7 +27,11 @@ volleyball-team-generator/
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
-└── requirements.txt
+├── setup-dev-env.sh
+├── requirements.in
+├── requirements.txt
+├── requirements-dev.in
+└── requirements-dev.txt
 ```
 
 ---
@@ -40,6 +43,7 @@ volleyball-team-generator/
 - 💬 Optional explanation output from LLM
 - 📤 Export team lists (future)
 - 🧪 Extensible architecture for scoring systems
+- 🧍 Player entity abstraction and validation logic
 
 ---
 
@@ -63,11 +67,28 @@ cd volleyball-team-generator
 ```
 
 ### 2. Install dependencies
+# Requires: Python 3.13+
 ```bash
+# First, install pip-tools (if not already installed)
+pip install pip-tools
+
+# Compile both runtime and dev requirements
+pip-compile requirements.in
+pip-compile requirements-dev.in
+
+# Install dependencies
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
+
+# Alternatively, run:
+./setup-dev-env.sh
+
+### 3. Set up Git hooks (optional but recommended)
+```bash
+pre-commit install
 ```
 
-### 3. Run the app
+### 4. Run the app
 ```bash
 streamlit run src/app.py
 ```
