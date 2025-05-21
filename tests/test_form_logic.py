@@ -15,11 +15,13 @@ def test_process_player_empty_name():
     assert msg == "❌ Name cannot be empty"
     assert len(players) == 0
 
+
 def test_process_player_empty_position():
     players = []
     msg = process_player_form("Jei", "Select...", "Beginner", players)
     assert msg == "❌ Position and/or Skill Level cannot be empty"
     assert len(players) == 0
+
 
 def test_process_player_empty_skill_level():
     players = []
