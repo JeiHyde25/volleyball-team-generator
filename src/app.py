@@ -2,11 +2,11 @@ import pandas as pd
 import streamlit as st
 
 from src.form_logic import process_player_form
-from src.player import Player
+from src.player_manager import PlayerManager
 
 # Initialize session state
-if "players" not in st.session_state:
-    st.session_state.players = []
+if "player_manager" not in st.session_state:
+    st.session_state.player_manager = PlayerManager()
 
 st.title("🏐 Volleyball Team Generator")
 
@@ -23,14 +23,16 @@ with st.form(key="players_form"):
     submitted = st.form_submit_button("Add Player")
 
     if submitted:
-        msg = process_player_form(name, position, skill_level, st.session_state.players)
+        msg = process_player_form(
+            name, position, skill_level, st.session_state.player_manager
+        )
         if msg.startswith("✅"):
             st.success(msg)
         else:
             st.error(msg)
 
 # Show current player list
-if st.session_state.players:
+if st.session_state.player_manager.get_player_list():
     st.write("### Current Players")
 
     # Convert player objects to table-ready data
@@ -40,7 +42,7 @@ if st.session_state.players:
             "Position": player.position,
             "Skill Level": player.skill_level,
         }
-        for player in st.session_state.players
+        for player in st.session_state.player_manager.get_player_list()
     ]
 
     df = pd.DataFrame(table_data)
