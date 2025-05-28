@@ -1,11 +1,12 @@
 # 🏐 Volleyball Team Generator
 
-![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-orange)
+![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)  
+![Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-orange)  
+[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
 An AI-powered Streamlit application that helps coaches and players create fair and balanced volleyball teams based on player positions and skill levels. Built using LangChain and OpenAI for intelligent team balancing and reasoning.
 
-🚀 [Live Demo](https://volleyball-team-generator-n9ny.onrender.com)
+🌐 **[Live Demo](https://volleyball-team-generator-n9ny.onrender.com)**
 
 ---
 
@@ -17,21 +18,20 @@ volleyball-team-generator/
 │   └── team_balance.txt
 ├── src/
 │   ├── app.py
-│   ├── generator.py
-│   ├── utils.py
 │   ├── player.py
 │   └── config.py
 ├── tests/
-│   └── test_generator.py
+│   ├── form_logic.py
+│   └── test_player.py
 ├── .gitignore
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
-├── setup-dev-env.sh
 ├── requirements.in
 ├── requirements.txt
 ├── requirements-dev.in
 └── requirements-dev.txt
+└── setup-dev-env.sh
 ```
 
 ---
@@ -41,7 +41,7 @@ volleyball-team-generator/
 - 🧑‍🤝‍🧑 Input player names, positions, and skill levels
 - ⚖️ Generate balanced teams using AI logic
 - 💬 Optional explanation output from LLM
-- 📤 Export team lists (future)
+- 📤 Export team lists *(coming soon)*
 - 🧪 Extensible architecture for scoring systems
 - 🧍 Player entity abstraction and validation logic
 
@@ -61,13 +61,14 @@ volleyball-team-generator/
 ## 🛠️ Getting Started (Local)
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/JeiHyde25/volleyball-team-generator.git
 cd volleyball-team-generator
 ```
 
 ### 2. Install dependencies
-# Requires: Python 3.13+
+# Requires Python 3.13+ and pip-tools
 ```bash
 # First, install pip-tools (if not already installed)
 pip install pip-tools
@@ -90,7 +91,7 @@ pre-commit install
 
 ### 4. Run the app
 ```bash
-streamlit run src/app.py
+PYTHONPATH=. streamlit run src/app.py
 ```
 
 ---
@@ -98,8 +99,8 @@ streamlit run src/app.py
 ## 📦 Docker
 
 ```bash
-docker build -t volleyball-generator .
-docker run -p 8080:8080 volleyball-generator
+docker build -t volleyball-team-generator .
+docker run -p 8080:8080 volleyball-team-generator
 ```
 
 ---
