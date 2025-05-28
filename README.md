@@ -5,7 +5,7 @@
 
 An AI-powered Streamlit application that helps coaches and players create fair and balanced volleyball teams based on player positions and skill levels. Built using LangChain and OpenAI for intelligent team balancing and reasoning.
 
-🚀 [Live Demo](https://your-app-url.onrender.com) <!-- Replace with actual Render URL -->
+🚀 [Live Demo](https://volleyball-team-generator-n9ny.onrender.com)
 
 ---
 
