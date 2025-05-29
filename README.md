@@ -18,11 +18,13 @@ volleyball-team-generator/
 │   └── team_balance.txt
 ├── src/
 │   ├── app.py
+│   ├── form_logic.py
 │   ├── player.py
-│   └── config.py
+│   └── player.py
 ├── tests/
 │   ├── form_logic.py
-│   └── test_player.py
+│   ├── test_player.py
+│   └── test_player_manager.py
 ├── .gitignore
 ├── Dockerfile
 ├── LICENSE

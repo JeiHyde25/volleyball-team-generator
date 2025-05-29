@@ -2,10 +2,10 @@ import pytest
 
 from src.player import Player, create_player
 
-VALID_POSITIONS = ["Setter", "Outside Hitter", "Middle Blocker", "Opposite"]
+VALID_POSITIONS = ["Setter", "Outside Hitter", "Middle Blocker", "Opposite Hitter"]
 
 VALID_SKILL_LEVELS = [
-    "Beginner",
+    "Developmental",
     "Intermediate",
     "Advanced",
 ]
