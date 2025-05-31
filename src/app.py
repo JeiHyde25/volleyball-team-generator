@@ -98,4 +98,3 @@ show_player_list()
 
 if st.button("Generate Teams"):
     st.success(f"🎉 Teams generated.")
-
