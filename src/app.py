@@ -66,6 +66,25 @@ def show_input_play_via_csv():
                 )
 
 
+def show_player_list():
+    if st.session_state.player_manager.get_player_list():
+        st.write("### Current Players")
+
+        # Convert player objects to table-ready data
+        table_data = [
+            {
+                "Name": player.name,
+                "Position": player.position,
+                "Skill Level": player.skill_level,
+            }
+            for player in st.session_state.player_manager.get_player_list()
+        ]
+
+        df = pd.DataFrame(table_data)
+
+        st.dataframe(df, use_container_width=True, hide_index=True)
+
+
 # Initialize session state
 if "player_manager" not in st.session_state:
     st.session_state.player_manager = PlayerManager()
@@ -75,21 +94,7 @@ st.title("🏐 Volleyball Team Generator")
 
 show_player_input_form()
 show_input_play_via_csv()
+show_player_list()
 
-# Show current player list
-if st.session_state.player_manager.get_player_list():
-    st.write("### Current Players")
-
-    # Convert player objects to table-ready data
-    table_data = [
-        {
-            "Name": player.name,
-            "Position": player.position,
-            "Skill Level": player.skill_level,
-        }
-        for player in st.session_state.player_manager.get_player_list()
-    ]
-
-    df = pd.DataFrame(table_data)
-
-    st.dataframe(df, use_container_width=True, hide_index=True)
+if st.button("Generate Teams"):
+    st.success(f"🎉 Teams generated.")
