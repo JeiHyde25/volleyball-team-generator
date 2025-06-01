@@ -1,0 +1,17 @@
+{
+    "name": "volleyball-team-generator",
+    "image": "mcr.microsoft.com/devcontainers/python:3.13",
+    "postCreateCommand": "chmod +x .devcontainer/start.sh && .devcontainer/start.sh",
+    "forwardPorts": [8501],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    }
+}
