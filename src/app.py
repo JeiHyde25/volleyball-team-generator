@@ -3,6 +3,7 @@ import streamlit as st
 
 from src.form_logic import process_player_form
 from src.player_manager import PlayerManager
+from src.csv_importer import import_players_from_df, validate_csv
 
 
 def show_player_input_form():
@@ -17,6 +18,7 @@ def show_player_input_form():
         skill_level = st.selectbox(
             "Skill Level", ["Select...", "Developmental", "Intermediate", "Advanced"]
         )
+
         submitted = st.form_submit_button("Add Player")
 
         if submitted:
@@ -29,7 +31,7 @@ def show_player_input_form():
                 st.error(msg)
 
 
-def show_input_play_via_csv():
+def show_input_players_via_csv():
     global name, position, skill_level, msg
     uploaded_file = st.file_uploader("Upload CSV to Import Players", type=["csv"])
     if uploaded_file:
@@ -38,29 +40,14 @@ def show_input_play_via_csv():
         st.subheader("📄 Preview Uploaded CSV")
         st.dataframe(imported_players_df.head(), use_container_width=True)
 
-        expected_columns = {"Name", "Position", "Skill Level"}
-        if not expected_columns.issubset(imported_players_df.columns):
-            st.error(
-                "❌ Invalid CSV format. Required columns: Name, Position, Skill Level"
-            )
+        msg = validate_csv(imported_players_df)
+        if "❌" in msg:
+            st.error(msg)
         else:
             if st.button("Import Players from CSV"):
-                added_count = 0
-                skipped_count = 0
-
-                for index, row in imported_players_df.iterrows():
-                    name = str(row.get("Name", "")).strip()
-                    position = str(row.get("Position", "")).strip()
-                    skill_level = str(row.get("Skill Level", "")).strip()
-
-                    msg = process_player_form(
-                        name, position, skill_level, st.session_state.player_manager
-                    )
-                    if msg.startswith("✅"):
-                        added_count += 1
-                    else:
-                        skipped_count += 1
-
+                added_count, skipped_count = import_players_from_df(
+                    imported_players_df, st.session_state.player_manager
+                )
                 st.success(
                     f"🎉 Imported {added_count} player(s). ❌ Skipped {skipped_count} invalid/duplicate entries."
                 )
@@ -86,15 +73,36 @@ def show_player_list():
 
 
 # Initialize session state
-if "player_manager" not in st.session_state:
-    st.session_state.player_manager = PlayerManager()
+app_session_state = st.session_state
+if "player_manager" not in app_session_state:
+    app_session_state.player_manager = PlayerManager()
+
+app_player_manager = app_session_state.player_manager
 
 st.title("🏐 Volleyball Team Generator")
-
-
 show_player_input_form()
-show_input_play_via_csv()
+show_input_players_via_csv()
 show_player_list()
 
 if st.button("Generate Teams"):
-    st.success(f"🎉 Teams generated.")
+    errors = False
+    if app_player_manager.get_player_count() < 12:
+        st.error("❌ Cannot generate teams - player count is less than 12")
+        errors = True
+    if not app_player_manager.has_valid_position_distribution():
+        st.error(
+            "❌ Cannot generate teams - invalid role distribution.\n\n"
+            "Each team requires:\n"
+            "• 1 Setter (total: 2)\n"
+            "• 2 Open Hitters (total: 4)\n"
+            "• 2 Middle Blockers (total: 4)\n"
+            "• 1 Opposite Hitter (total: 2)\n\n"
+            f"Your current selection:\n"
+            f"• Setters: {app_player_manager.get_total_setter_count()}\n"
+            f"• Open Hitters: {app_player_manager.get_total_open_hitter_count()}\n"
+            f"• Middle Blockers: {app_player_manager.get_total_middle_blocker_count()}\n"
+            f"• Opposite Hitters: {app_player_manager.get_total_opposite_hitter_count()}"
+        )
+        errors = True
+    if not errors:
+        st.success(f"🎉 Teams generated.")
