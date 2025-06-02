@@ -33,18 +33,18 @@ def show_player_input_form():
 
 def show_input_players_via_csv():
     global name, position, skill_level, msg
-    uploaded_file = st.file_uploader("Upload CSV to Import Players", type=["csv"])
+
+    with st.form(key="players_via_csv_form"):
+        uploaded_file = st.file_uploader("Upload CSV to Import Players", type=["csv"])
+        import_players_button_clicked = st.form_submit_button("Import Players from CSV")
     if uploaded_file:
         imported_players_df = pd.read_csv(uploaded_file)
-
-        st.subheader("📄 Preview Uploaded CSV")
-        st.dataframe(imported_players_df.head(), use_container_width=True)
 
         msg = validate_csv(imported_players_df)
         if "❌" in msg:
             st.error(msg)
         else:
-            if st.button("Import Players from CSV"):
+            if import_players_button_clicked:
                 added_count, skipped_count = import_players_from_df(
                     imported_players_df, st.session_state.player_manager
                 )
@@ -55,7 +55,7 @@ def show_input_players_via_csv():
 
 def show_player_list():
     if st.session_state.player_manager.get_player_list():
-        st.write("### Current Players")
+        st.write(f"### Current Players ({app_player_manager.get_player_count()})")
 
         # Convert player objects to table-ready data
         table_data = [

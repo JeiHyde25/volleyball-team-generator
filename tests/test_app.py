@@ -68,6 +68,7 @@ def test_generate_teams_button_wont_succeed_if_players_less_than_twelve():
     assert any("❌" in e.value for e in at.error)
     assert not at.success
 
+
 def test_generate_teams_button_succeeds_if_players_count_twelve():
     at = AppTest.from_file("../src/app.py")
     mock_manager = MagicMock()
