@@ -84,7 +84,7 @@ show_player_input_form()
 show_input_players_via_csv()
 show_player_list()
 
-if st.button("Generate Teams"):
+if st.button(label="Generate Teams", key="generate-teams"):
     errors = False
     if app_player_manager.get_player_count() < 12:
         st.error("❌ Cannot generate teams - player count is less than 12")

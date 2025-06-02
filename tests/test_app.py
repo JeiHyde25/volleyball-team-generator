@@ -63,7 +63,7 @@ def test_generate_teams_button_wont_succeed_if_players_less_than_twelve():
 
     at.session_state.player_manager = mock_manager
     at.run()
-    at.button[1].click()
+    at.button(key="generate-teams").click()
     at.run()
     assert any("❌" in e.value for e in at.error)
     assert not at.success
@@ -76,12 +76,12 @@ def test_generate_teams_button_succeeds_if_players_count_twelve():
     at.session_state.player_manager = mock_manager
     at.run()
     assert at.session_state["player_manager"].get_player_count() == 0
-    at.button[1].click()
+    at.button(key="generate-teams").click()
     at.run()
     assert any("❌" in e.value for e in at.error)
 
     mock_manager.get_player_count = MagicMock(return_value=12)
-    at.button[1].click()
+    at.button(key="generate-teams").click()
     at.run()
     assert at.success
 
@@ -94,11 +94,11 @@ def test_generate_teams_button_wont_succeed_if_position_distribution_is_invalid(
     at.session_state.player_manager = mock_manager
     at.run()
     assert at.session_state["player_manager"].get_player_count() == 0
-    at.button[1].click()
+    at.button(key="generate-teams").click()
     at.run()
     assert any("❌" in e.value for e in at.error)
 
     mock_manager.get_player_count = MagicMock(return_value=12)
-    at.button[1].click()
+    at.button(key="generate-teams").click()
     at.run()
     assert any("❌" in e.value for e in at.error)
