@@ -19,5 +19,24 @@ class PlayerManager:
     def get_player_count(self) -> int:
         return len(self.players)
 
-    def get_player_list(self):
+    def get_player_list(self) -> int:
         return self.players
+
+    def has_valid_position_distribution(self) -> bool:
+        return False
+
+    def get_total_setter_count(self) -> int:
+        return 1
+
+    def get_total_open_hitter_count(self) -> int:
+        return 1
+
+    def get_total_middle_blocker_count(self) -> int:
+        return 1
+
+    def get_total_opposite_hitter_count(self) -> int:
+        return 1
+
+    def remove_all_players(self):
+        self.players.clear()
+        self.seen_players.clear()
