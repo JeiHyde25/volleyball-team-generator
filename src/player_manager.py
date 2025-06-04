@@ -5,6 +5,12 @@ class PlayerManager:
     def __init__(self):
         self.players = []
         self.seen_players = set()
+        self.position_counts = {
+            "S": 0,
+            "OH": 0,
+            "MB": 0,
+            "OP": 0
+        }
 
     def add_unique_player(
         self, name: str = "", position: str = "", skill_level: str = ""
@@ -14,6 +20,14 @@ class PlayerManager:
             return "❌ Duplicate Player detected"
         self.seen_players.add(key)
         self.players.append(create_player(name, position, skill_level))
+        if position == "Setter":
+            self.position_counts["S"] += 1
+        elif position == "Open Hitter":
+            self.position_counts["OH"] += 1
+        elif position == "Middle Blocker":
+            self.position_counts["MB"] += 1
+        elif position == "Opposite Hitter":
+            self.position_counts["OP"] += 1
         return "✅ Player added"
 
     def get_player_count(self) -> int:
