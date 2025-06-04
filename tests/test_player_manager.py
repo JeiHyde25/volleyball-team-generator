@@ -25,3 +25,11 @@ def test_add_unique_player_failes_when_adding_a_duplicate_player():
     msg = player_manager.add_unique_player("Jei", "Setter", "Developmental")
     assert msg == "❌ Duplicate Player detected"
     assert player_manager.get_player_count() == 1
+
+
+def test_has_valid_position_distribution_returns_true_if_player_positions_are_balanced():
+    player_manager = PlayerManager()
+    imported_players_df = pd.read_csv("players_twelve.csv")
+
+
+    assert player_manager.has_valid_position_distribution()
