@@ -5,12 +5,7 @@ class PlayerManager:
     def __init__(self):
         self.players = []
         self.seen_players = set()
-        self.position_counts = {
-            "S": 0,
-            "OH": 0,
-            "MB": 0,
-            "OP": 0
-        }
+        self.position_counts = {"S": 0, "OH": 0, "MB": 0, "OP": 0}
 
     def add_unique_player(
         self, name: str = "", position: str = "", skill_level: str = ""
@@ -37,19 +32,25 @@ class PlayerManager:
         return self.players
 
     def has_valid_position_distribution(self) -> bool:
-        return False
+        return (
+            self.get_total_setter_count() == self.get_total_opposite_hitter_count()
+            and self.get_total_open_hitter_count()
+            == self.get_total_middle_blocker_count()
+            and (self.get_total_open_hitter_count() / self.get_total_setter_count())
+            == 2
+        )
 
     def get_total_setter_count(self) -> int:
-        return 1
+        return self.position_counts["S"]
 
     def get_total_open_hitter_count(self) -> int:
-        return 1
+        return self.position_counts["OH"]
 
     def get_total_middle_blocker_count(self) -> int:
-        return 1
+        return self.position_counts["MB"]
 
     def get_total_opposite_hitter_count(self) -> int:
-        return 1
+        return self.position_counts["OP"]
 
     def remove_all_players(self):
         self.players.clear()

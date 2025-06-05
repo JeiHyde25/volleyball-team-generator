@@ -1,3 +1,4 @@
+from src.csv_importer import import_players_from_df
 from src.player import Player
 from src.player_manager import PlayerManager
 import pandas as pd
@@ -31,6 +32,14 @@ def test_add_unique_player_failes_when_adding_a_duplicate_player():
 def test_has_valid_position_distribution_returns_true_if_player_positions_are_balanced():
     player_manager = PlayerManager()
     imported_players_df = pd.read_csv("tests/players_twelve.csv")
-
-
+    import_players_from_df(imported_players_df, player_manager)
     assert player_manager.has_valid_position_distribution()
+
+
+def test_has_valid_position_distribution_returns_false_if_player_positions_are_not_balanced():
+    player_manager = PlayerManager()
+    imported_players_df = pd.read_csv(
+        "tests/players_twelve_lacking_player_position.csv"
+    )
+    import_players_from_df(imported_players_df, player_manager)
+    assert not player_manager.has_valid_position_distribution()
