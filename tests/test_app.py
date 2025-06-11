@@ -86,7 +86,7 @@ def test_generate_teams_button_succeeds_if_players_count_twelve():
     assert at.success
 
 
-def test_generate_teams_button_wont_succeed_if_position_distribution_is_invalid():
+def test_generate_teams_button_wont_succeed_if_position_distribution_is_invalid_mocked():
     at = AppTest.from_file("../src/app.py")
     mock_manager = MagicMock()
     mock_manager.get_player_count = MagicMock(return_value=0)

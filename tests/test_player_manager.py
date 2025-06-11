@@ -10,6 +10,7 @@ def test_add_unique_player_succeeds_when_adding_first_player():
     assert msg == "✅ Player added"
     assert player_manager.get_player_count() == 1
     assert Player("Jei", "Setter", "Developmental") in player_manager.get_player_list()
+    assert player_manager.get_total_setter_count() == 1
 
 
 def test_add_unique_player_succeeds_when_adding_second_unique_player():
@@ -19,6 +20,7 @@ def test_add_unique_player_succeeds_when_adding_second_unique_player():
     assert msg == "✅ Player added"
     assert player_manager.get_player_count() == 2
     assert Player("Carl", "Setter", "Developmental") in player_manager.get_player_list()
+    assert player_manager.get_total_setter_count() == 2
 
 
 def test_add_unique_player_failes_when_adding_a_duplicate_player():
@@ -27,6 +29,9 @@ def test_add_unique_player_failes_when_adding_a_duplicate_player():
     msg = player_manager.add_unique_player("Jei", "Setter", "Developmental")
     assert msg == "❌ Duplicate Player detected"
     assert player_manager.get_player_count() == 1
+    assert any(
+        player.name == "Jei" for player in player_manager.get_player_list("Setter")
+    )
 
 
 def test_has_valid_position_distribution_returns_true_if_player_positions_are_balanced():

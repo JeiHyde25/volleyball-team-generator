@@ -5,7 +5,12 @@ class PlayerManager:
     def __init__(self):
         self.players = []
         self.seen_players = set()
-        self.position_counts = {"S": 0, "OH": 0, "MB": 0, "OP": 0}
+        self.position_bucket = {
+            "Setter": [],
+            "Oopen Hitter": [],
+            "Middle Blocker": [],
+            "Opposite Hitter": [],
+        }
 
     def add_unique_player(
         self, name: str = "", position: str = "", skill_level: str = ""
@@ -14,15 +19,10 @@ class PlayerManager:
         if key in self.seen_players:
             return "❌ Duplicate Player detected"
         self.seen_players.add(key)
-        self.players.append(create_player(name, position, skill_level))
-        if position == "Setter":
-            self.position_counts["S"] += 1
-        elif position == "Open Hitter":
-            self.position_counts["OH"] += 1
-        elif position == "Middle Blocker":
-            self.position_counts["MB"] += 1
-        elif position == "Opposite Hitter":
-            self.position_counts["OP"] += 1
+        player = create_player(name, position, skill_level)
+        self.players.append(player)
+        if player.position in self.position_bucket:
+            self.position_bucket[player.position].append(player)
         return "✅ Player added"
 
     def get_player_count(self) -> int:
@@ -41,17 +41,20 @@ class PlayerManager:
         )
 
     def get_total_setter_count(self) -> int:
-        return self.position_counts["S"]
+        return len([p for p in self.players if p.position == "Setter"])
 
     def get_total_open_hitter_count(self) -> int:
-        return self.position_counts["OH"]
+        return len([p for p in self.players if p.position == "Open Hitter"])
 
     def get_total_middle_blocker_count(self) -> int:
-        return self.position_counts["MB"]
+        return len([p for p in self.players if p.position == "Middle Blocker"])
 
     def get_total_opposite_hitter_count(self) -> int:
-        return self.position_counts["OP"]
+        return len([p for p in self.players if p.position == "Opposite Hitter"])
 
     def remove_all_players(self):
         self.players.clear()
         self.seen_players.clear()
+
+    def get_player_list(self, position: str = "") -> list:
+        return self.position_bucket[position]
