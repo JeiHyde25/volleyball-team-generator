@@ -85,24 +85,24 @@ show_input_players_via_csv()
 show_player_list()
 
 if st.button(label="Generate Teams", key="generate-teams"):
-    errors = False
     if app_player_manager.get_player_count() < 12:
         st.error("❌ Cannot generate teams - player count is less than 12")
         errors = True
-    if not app_player_manager.has_valid_position_distribution():
-        st.error(
-            "❌ Cannot generate teams - invalid role distribution.\n\n"
-            "Each team requires:\n"
-            "• 1 Setter (total: 2)\n"
-            "• 2 Open Hitters (total: 4)\n"
-            "• 2 Middle Blockers (total: 4)\n"
-            "• 1 Opposite Hitter (total: 2)\n\n"
-            f"Your current selection:\n"
-            f"• Setters: {app_player_manager.get_total_setter_count()}\n"
-            f"• Open Hitters: {app_player_manager.get_total_open_hitter_count()}\n"
-            f"• Middle Blockers: {app_player_manager.get_total_middle_blocker_count()}\n"
-            f"• Opposite Hitters: {app_player_manager.get_total_opposite_hitter_count()}"
-        )
-        errors = True
-    if not errors:
-        st.success(f"🎉 Teams generated.")
+    else:
+        try:
+            teams = app_player_manager.generate_teams()
+            st.success(f"🎉 Teams generated.")
+        except ValueError as e:
+            st.error(
+                "❌ Cannot generate teams - invalid role distribution.\n\n"
+                "Each team requires:\n"
+                "• 1 Setter (total: 2)\n"
+                "• 2 Open Hitters (total: 4)\n"
+                "• 2 Middle Blockers (total: 4)\n"
+                "• 1 Opposite Hitter (total: 2)\n\n"
+                f"Your current selection:\n"
+                f"• Setters: {app_player_manager.get_total_setter_count()}\n"
+                f"• Open Hitters: {app_player_manager.get_total_open_hitter_count()}\n"
+                f"• Middle Blockers: {app_player_manager.get_total_middle_blocker_count()}\n"
+                f"• Opposite Hitters: {app_player_manager.get_total_opposite_hitter_count()}"
+            )

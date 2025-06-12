@@ -99,6 +99,9 @@ def test_generate_teams_button_wont_succeed_if_position_distribution_is_invalid_
     assert any("❌" in e.value for e in at.error)
 
     mock_manager.get_player_count = MagicMock(return_value=12)
+    mock_manager.generate_teams = MagicMock(
+        side_effect=ValueError("invalid role distribution")
+    )
     at.button(key="generate-teams").click()
     at.run()
     assert any("❌" in e.value for e in at.error)
