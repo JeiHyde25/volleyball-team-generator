@@ -72,26 +72,18 @@ def show_player_list():
         st.dataframe(df, use_container_width=True, hide_index=True)
 
 
-# Initialize session state
-app_session_state = st.session_state
-if "player_manager" not in app_session_state:
-    app_session_state.player_manager = PlayerManager()
-
-app_player_manager = app_session_state.player_manager
-
-st.title("🏐 Volleyball Team Generator")
-show_player_input_form()
-show_input_players_via_csv()
-show_player_list()
-
-if st.button(label="Generate Teams", key="generate-teams"):
+def show_generated_teams():
     if app_player_manager.get_player_count() < 12:
         st.error("❌ Cannot generate teams - player count is less than 12")
-        errors = True
     else:
         try:
             teams = app_player_manager.generate_teams()
-            st.success(f"🎉 Teams generated.")
+            if not teams.empty:
+                st.success(f"🎉 Teams generated.")
+                st.write(
+                    f"### Generated Teams ({app_player_manager.get_player_count()} players)"
+                )
+                st.dataframe(teams, use_container_width=True)
         except ValueError as e:
             st.error(
                 "❌ Cannot generate teams - invalid role distribution.\n\n"
@@ -106,3 +98,20 @@ if st.button(label="Generate Teams", key="generate-teams"):
                 f"• Middle Blockers: {app_player_manager.get_total_middle_blocker_count()}\n"
                 f"• Opposite Hitters: {app_player_manager.get_total_opposite_hitter_count()}"
             )
+
+
+# Initialize session state
+app_session_state = st.session_state
+if "player_manager" not in app_session_state:
+    app_session_state.player_manager = PlayerManager()
+
+app_player_manager = app_session_state.player_manager
+
+st.title("🏐 Volleyball Team Generator")
+show_player_input_form()
+show_input_players_via_csv()
+
+if st.button(label="Generate Teams", key="generate-teams"):
+    show_generated_teams()
+else:
+    show_player_list()

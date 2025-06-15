@@ -71,10 +71,10 @@ def test_generate_teams_returns_dataframe_of_teams():
     assert list(df.columns) == ["Team A", "Team B"]
     assert list(df.index) == [
         "Setter",
-        "Open Hitter",
-        "Open Hitter",
-        "Middle Blocker",
-        "Middle Blocker",
+        "Open Hitter 1",
+        "Open Hitter 2",
+        "Middle Blocker 1",
+        "Middle Blocker 2",
         "Opposite Hitter",
     ]
     assert "Jei" in df["Team A"].values

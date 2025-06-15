@@ -82,6 +82,36 @@ def test_generate_teams_button_succeeds_if_players_count_twelve():
 
     mock_manager.get_player_count = MagicMock(return_value=12)
     at.button(key="generate-teams").click()
+    mock_manager.generate_teams = MagicMock(
+        return_value=pd.DataFrame(
+            {
+                "Team A": [
+                    "Player1",
+                    "Player3",
+                    "Player5",
+                    "Player7",
+                    "Player9",
+                    "Player11",
+                ],
+                "Team B": [
+                    "Player2",
+                    "Player4",
+                    "Player6",
+                    "Player8",
+                    "Player10",
+                    "Player12",
+                ],
+            },
+            index=[
+                "Setter",
+                "Open Hitter",
+                "Open Hitter",
+                "Middle Blocker",
+                "Middle Blocker",
+                "Opposite Hitter",
+            ],
+        )
+    )
     at.run()
     assert at.success
 

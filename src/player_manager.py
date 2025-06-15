@@ -71,13 +71,13 @@ class PlayerManager:
             return df
         return pd.DataFrame()
 
-    def _distribute_players_by_position(self) -> tuple[dict[str, list[str]], list[str]]:
+    def _distribute_players_by_position(self):
         roles = [
             "Setter",
-            "Open Hitter",
-            "Open Hitter",
-            "Middle Blocker",
-            "Middle Blocker",
+            "Open Hitter 1",
+            "Open Hitter 2",
+            "Middle Blocker 1",
+            "Middle Blocker 2",
             "Opposite Hitter",
         ]
         role_to_row = {
@@ -94,12 +94,7 @@ class PlayerManager:
             print(role, rows)
             players = self.position_bucket[role]
             for i, player in enumerate(players):
-                print(i, player)
                 team_index = i % number_of_teams
-                print(team_index, teams[team_index])
-
-                row_index = (
-                    rows[i % len(rows)] if len(rows) > i % len(rows) else rows[0]
-                )
+                row_index = rows[(i // number_of_teams) % len(rows)]
                 data[teams[team_index]][row_index] = player.name
         return data, roles
